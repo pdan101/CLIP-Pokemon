@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 class PokemonImageDataset(Dataset):
     def __init__(self, train=True):
         ds = load_dataset("fcakyon/pokemon-classification", name="full")
-        ds = ds.with_format("torch")
+        # ds = ds.with_format("torch")
         pokemon_names = pd.read_csv("./pokemon_data/ds_labels.csv")
         pokemon_types = pd.read_csv("./pokemon_data/pokemon_types.csv")
         self.pokemon_names = pokemon_names
@@ -17,17 +17,20 @@ class PokemonImageDataset(Dataset):
         if train:
             self.img_dir = ds["train"]["image_file_path"]
             self.img_label = ds["train"]["labels"]
+            self.img = ds["train"]["image"]
         else:
             self.img_dir = ds["test"]["image_file_path"]
             self.img_label = ds["test"]["labels"]
+            self.img = ds["test"]["image"]
 
     def __len__(self):
         return len(self.img_dir)
 
     def __getitem__(self, idx):
-        img_path = self.img_dir[idx]
-        image = read_image(img_path)
-        name_idx = self.img_label[idx].item()
+        # img_path = self.img_dir[idx]
+        # image = read_image(img_path)
+        image = self.img[idx]
+        name_idx = self.img_label[idx]
         name = self.pokemon_names.iloc[name_idx]["name"]
         type1_idx = self.pokemon_types[self.pokemon_types["name"] == name][
             "type1_labels"
@@ -42,7 +45,7 @@ class PokemonImageDataset(Dataset):
 
 if __name__ == "__main__":
     data = PokemonImageDataset()
-    train_features, train_labels = next(iter(data))
-    print(train_features)
-    print(train_labels)
+    train_ex_features, train_ex_labels = next(iter(data))
+    print(train_ex_features)
+    print(train_ex_labels)
     print("done")

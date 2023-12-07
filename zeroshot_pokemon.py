@@ -3,6 +3,7 @@ import clip
 import torch
 from torchvision.datasets import CIFAR100
 from datasets import load_dataset
+from pokemon_dataset import PokemonImageDataset
 
 # Load the model
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -11,17 +12,17 @@ model, preprocess = clip.load("ViT-B/32", device)
 # Download the dataset
 cifar100 = CIFAR100(root=os.path.expanduser("~/.cache"), download=True, train=False)
 
-ds = load_dataset("fcakyon/pokemon-classification", name="full")
+ds = PokemonImageDataset(train=False)
 # import pdb; pdb.set_trace()
 # print(ds['test'][0])
 # Prepare the inputs
-image, class_id = ds["test"][0]["image"], ds["test"][0]["labels"]
-print(f"True Class: {ds['test'].features['labels'].int2str(ds['test'][0]['labels'])}")
+image, class_id = ds[0][0], ds[0][1][1]
+print(f"True Class: {ds[0][1][0]}")
 image_input = preprocess(image).unsqueeze(0).to(device)
 text_inputs = torch.cat(
     [
         clip.tokenize(f"a photo of Pokemon named {c}")
-        for c in ds["test"].features["labels"].names
+        for c in list(ds.pokemon_names["name"])
     ]
 ).to(device)
 
@@ -39,6 +40,4 @@ values, indices = similarity[0].topk(5)
 # Print the result
 print("\nTop predictions:\n")
 for value, index in zip(values, indices):
-    print(
-        f"{ds['test'].features['labels'].names[index]:>16s}: {100 * value.item():.2f}%"
-    )
+    print(f"{ds.pokemon_names['name'][index.item()]:>16s}: {100 * value.item():.2f}%")
