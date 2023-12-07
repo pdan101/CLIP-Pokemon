@@ -29,13 +29,15 @@ class PokemonImageDataset(Dataset):
         image = read_image(img_path)
         name_idx = self.img_label[idx].item()
         name = self.pokemon_names.iloc[name_idx]["name"]
-        type1 = self.pokemon_types[self.pokemon_types["name"] == name][
+        type1_idx = self.pokemon_types[self.pokemon_types["name"] == name][
             "type1_labels"
         ].item()
-        type2 = self.pokemon_types[self.pokemon_types["name"] == name][
+        type2_idx = self.pokemon_types[self.pokemon_types["name"] == name][
             "type2_labels"
         ].item()
-        return image, (name_idx, type1, type2)
+        type1 = self.pokemon_types[self.pokemon_types["name"] == name]["type1"].item()
+        type2 = self.pokemon_types[self.pokemon_types["name"] == name]["type2"].item()
+        return image, (name, name_idx, type1, type1_idx, type2, type2_idx)
 
 
 if __name__ == "__main__":
