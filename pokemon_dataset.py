@@ -40,12 +40,13 @@ class PokemonImageDataset(Dataset):
         ].item()
         type1 = self.pokemon_types[self.pokemon_types["name"] == name]["type1"].item()
         type2 = self.pokemon_types[self.pokemon_types["name"] == name]["type2"].item()
-        return image, (name, name_idx, type1, type1_idx, type2, type2_idx)
+        return image, (name, name_idx, type1, type1_idx)
 
 
 if __name__ == "__main__":
-    data = PokemonImageDataset()
-    train_ex_features, train_ex_labels = next(iter(data))
-    print(train_ex_features)
-    print(train_ex_labels)
+    data = PokemonImageDataset(train=False)
+    torch.save(data, './dataset.pth')
+    # train_ex_features, train_ex_labels = next(iter(data))
+    # print(train_ex_features)
+    # print(train_ex_labels)
     print("done")
