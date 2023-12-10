@@ -8,7 +8,11 @@ from torch.utils.data import Dataset
 
 class PokemonImageDataset(Dataset):
     def __init__(self, train=True):
-        ds = load_dataset("fcakyon/pokemon-classification", name="full")
+        ds = load_dataset(
+            "fcakyon/pokemon-classification",
+            revision="refs/convert/parquet",
+            name="full",
+        )
         # ds = ds.with_format("torch")
         pokemon_names = pd.read_csv("./pokemon_data/ds_labels.csv")
         pokemon_types = pd.read_csv("./pokemon_data/pokemon_types.csv")
@@ -45,7 +49,9 @@ class PokemonImageDataset(Dataset):
 
 if __name__ == "__main__":
     data = PokemonImageDataset(train=False)
-    torch.save(data, './dataset.pth')
+    trainData = PokemonImageDataset()
+    torch.save(data, "./dataset.pth")
+    torch.save(trainData, "./train_dataset.pth")
     # train_ex_features, train_ex_labels = next(iter(data))
     # print(train_ex_features)
     # print(train_ex_labels)

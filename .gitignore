@@ -9,3 +9,6 @@ env/
 thumbs.db
 .DS_Store
 .idea
+
+train_dataset.pth
+dataset.pth
