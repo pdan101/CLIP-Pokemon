@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 from pokemon_dataset import PokemonImageDataset
 import torch.optim as optim
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 # Load the model
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -27,10 +28,10 @@ loss_txt = torch.nn.CrossEntropyLoss()
 
 NUM_EPOCHS = 3
 losses = []
-for epoch in range(NUM_EPOCHS):
+for epoch in tqdm(range(NUM_EPOCHS)):
     epoch_loss = 0.0
     # Loop through the test set in batches
-    for i in range(0, total_samples, batch_size):
+    for i in tqdm(range(0, total_samples, batch_size)):
         optimizer.zero_grad()
         cur_end_idx = min(i+batch_size, len(test_dataset))
 
