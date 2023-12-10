@@ -12,8 +12,8 @@ model, preprocess = clip.load("ViT-B/32", device)
 optimizer = torch.optim.Adam(model.parameters(), lr=5e-5,betas=(0.9,0.98),eps=1e-6,weight_decay=0.2)
 
 test_dataset = torch.load('./dataset.pth')
-total_samples = len(test_dataset)
-batch_size = 2  # Adjust the batch size as needed
+total_samples = 640
+batch_size = 32  # Adjust the batch size as needed
 imgs = []
 names = []
 name_idxs = []
@@ -51,6 +51,7 @@ for epoch in range(NUM_EPOCHS):
     # Print average loss for the epoch
     average_loss = epoch_loss / (total_samples / batch_size)
     print(f"Epoch {epoch + 1}/{NUM_EPOCHS}, Average Loss: {average_loss}")
+    torch.save(model.state_dict(), f'checkpoint_{epoch}.pt')
     losses.append(average_loss)
 
 plt.plot(range(1, NUM_EPOCHS + 1), losses, marker='o')
