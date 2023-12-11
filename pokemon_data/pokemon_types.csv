@@ -27,6 +27,7 @@ Pikachu,electric,,6,-1
 Raichu,electric,electric,6,6
 Sandshrew,ground,ice,7,13
 Sandslash,ground,ice,7,13
+Alolan Sandslash,ground,ice,7,13
 Nidoran♀,poison,,5,-1
 Nidorina,poison,,5,-1
 Nidoqueen,poison,ground,5,7
@@ -81,7 +82,7 @@ Slowpoke,water,psychic,2,10
 Slowbro,water,psychic,2,10
 Magnemite,electric,steel,6,16
 Magneton,electric,steel,6,16
-Farfetch'd,normal,flying,4,17
+Farfetchd,normal,flying,4,17
 Doduo,normal,flying,4,17
 Dodrio,normal,flying,4,17
 Seel,water,,2,-1
@@ -120,7 +121,7 @@ Goldeen,water,,2,-1
 Seaking,water,,2,-1
 Staryu,water,,2,-1
 Starmie,water,psychic,2,10
-Mr. Mime,psychic,fairy,10,8
+MrMime,psychic,fairy,10,8
 Scyther,bug,flying,3,17
 Jynx,ice,psychic,13,10
 Electabuzz,electric,,6,-1
