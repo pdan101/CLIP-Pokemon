@@ -12,7 +12,7 @@ model, preprocess = clip.load("ViT-B/32", device)
 test_dataset = torch.load("./dataset.pth")
 total_samples = len(test_dataset)
 correct_predictions = 0
-batch_size = 1  # Adjust the batch size as needed
+batch_size = 2  # Adjust the batch size as needed
 imgs = []
 names = []
 name_idxs = []
@@ -52,7 +52,7 @@ for i in tqdm(range(0, total_samples, batch_size)):
 
     # Check if the top predictions are correct
     for j in range(batch_size):
-        if name_idxs[i + j] in top_predictions[j]:
+        if name_idxs[i + j] in top_predictions[1][j]:
             correct_predictions += 1
 
 # Calculate accuracy
