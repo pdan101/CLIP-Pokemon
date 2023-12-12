@@ -59,6 +59,30 @@ def evaluate_caption(text_inputs):
     accuracy = correct_predictions / total_samples
     print(f"Accuracy: {accuracy * 100:.2f}%")
 
+print("_")
+evaluate_caption(torch.cat([
+    clip.tokenize(f"")
+    for name, type1, type2 in token_arr
+    ]).to(device))
+
+print("(name)")
+evaluate_caption(torch.cat([
+    clip.tokenize(f"{name}")
+    for name, type1, type2 in token_arr
+    ]).to(device))
+
+print("Photo of (name)")
+evaluate_caption(torch.cat([
+    clip.tokenize(f"A photo of {name}")
+    for name, type1, type2 in token_arr
+    ]).to(device))
+
+print("Pokemon named (name)")
+evaluate_caption(torch.cat([
+    clip.tokenize(f"A Pokemon named {name}")
+    for name, type1, type2 in token_arr
+    ]).to(device))
+
 print("A photo of Pokemon named (name)")
 evaluate_caption(torch.cat([
     clip.tokenize(f"A photo of Pokemon named {name}")
@@ -71,7 +95,7 @@ evaluate_caption(torch.cat([
     for name, type1, type2 in token_arr
     ]).to(device))
 
-print("A photo of Pokemon with primary type (type2)")
+print("A photo of Pokemon with secondary type (type2)")
 evaluate_caption(torch.cat([
     clip.tokenize(f"A photo of Pokemon with secondary type {type2}")
     for name, type1, type2 in token_arr
