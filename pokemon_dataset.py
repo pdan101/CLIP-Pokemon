@@ -44,7 +44,7 @@ class PokemonImageDataset(Dataset):
         ].item()
         type1 = self.pokemon_types[self.pokemon_types["name"] == name]["type1"].item()
         type2 = self.pokemon_types[self.pokemon_types["name"] == name]["type2"].item()
-        return image, (name, name_idx, type1, type1_idx)
+        return image, (name, name_idx, type1, type1_idx, type2, type2_idx)
 
 
 if __name__ == "__main__":
