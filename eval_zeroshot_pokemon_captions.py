@@ -27,8 +27,7 @@ for name in test_dataset.pokemon_names['name'].tolist():
     token_arr.append((name,type1,type2))
 
 def evaluate_caption(text_inputs):
-    # correct_predictions = 0
-    accuracy = []
+    correct_predictions = 0
 
     model.eval()
     with torch.no_grad():
@@ -48,14 +47,17 @@ def evaluate_caption(text_inputs):
 
         # Calculate similarity
         similarity = (100.0 * image_features @ text_features.T).softmax(dim=-1)
+        # Get the top prediction for each sample in the batch
+        top_predictions = similarity.softmax(dim=-1).topk(1)
 
         # Check if the top predictions are correct
         for j in range(batch_size):
-            similarity_value = similarity[j, name_idxs[i+j]]
-            accuracy.append(similarity_value)
+            if name_idxs[i + j] in top_predictions[1][j]:
+                correct_predictions += 1
         
-    print(f"Average Accuracy: {np.mean(accuracy)* 100:.2f}%")
-    print(f"Standard Deviation: {np.std(accuracy)* 100:.2f}%")
+    # Calculate accuracy
+    accuracy = correct_predictions / total_samples
+    print(f"Accuracy: {accuracy * 100:.2f}%")
 
 print("A photo of Pokemon named (name)")
 evaluate_caption(torch.cat([
